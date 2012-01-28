@@ -58,8 +58,9 @@ hackernews()
     grep -Eio "<item>.*</item>" |
     grep -Eio "<($attributes)>[^<>]*</($attributes)>" |
     sed $sed_attributes "s/<title>([^<>]*)<\/title>/$highlight_title\1/" |
-    sed $sed_attributes "s/<link>([^<>]*)<\/link>/$highlight_link\1★/" |
-    tr "★" "\n" |
+    sed $sed_attributes "s/<link>([^<>]*)<\/link>/$highlight_link\1\n/" |
+    recode UTF-8..ISO-8859-1 |
+    recode HTML_4.0 |
     head -n $limit
   printf "\033[0m"
 }
